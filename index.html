@@ -25,14 +25,44 @@
     <div class="tab-content mt-5" id="myTabContent">
       <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
         <div class="container d-flex align-items-center">
+
+          <select class="form-select form-select-lg me-4" id="experticket-selector" aria-label="experticket selector">
+            <option selected>Selecciona Expeticket...</option>
+            <option value="bombasgens">BOMBAS GENS</option>
+            <option value="dinopolis">DINOPOLIS</option>
+            <option value="dna">DNA</option>
+            <option value="dta">DTA - Mestalla i Palau de les Arts</option>
+            <option value="excursionesmaritimas">EXCURSIONES MARITIMAS BENIDORM</option>
+            <option value="gdsparquesreunidos">GDS PARQUES REUNIDOS</option>
+            <option value="grprgermany">GDS PPRR ALEMANIA (Moviepark)</option>
+            <option value="grprbelgium">GDS PPRR BELGICA (Bobbejaanland)</option>
+            <option value="grpritaly">GDS PPRR ITALIA (Mirabilandia)</option>
+            <option value="grprnetherlands">GDS PPRR NETHERLANDS (Slagharen)</option>
+            <option value="hwmaspalomas">HOLLYDAY WORLD Maspalomas</option>
+            <option value="islamagica">ISLA MAGICA</option>
+            <option value="magiccostablanca">MAGIC COSTA BLANCA</option>
+            <option value="oceanografic">OCEANOGRAFIC</option>
+            <option value="parquesgruposm">PARQUES GRUPO SANTA MARIA</option>
+            <option value="portaventuraworld">PORT AVENTURA WORLD</option>
+            <option value="puydufou">PUY DU FOU</option>
+            <option value="puydufou-france">PUY DU FOU FRANCIA</option>
+            <option value="sendaviva">SENDAVIVA</option>
+            <option value="terranatura">TERRA NATURA BENIDORM</option>
+            <option value="terranaturamurcia">TERRA NATURA MURCIA</option>
+            <option value="tixalia">TIXALIA</option>  <!-- Tixalia funciona distinto:
+                            en PRO es admin.tixalia.com y en PRE es como los demás
+                            El resto son admin.tixalia.experticket.com 
+                            hay que ver una forma de quitar.experticket en PRO de tixalia -->
+            <option value="travelparks">TRAVELPARKS</option>
+            <option value="visitvalencia">VISIT VALENCIA</option>
+          </select>
+
           <select class="form-select form-select-lg me-4" id="expert-env" aria-label="environment type">
             <option selected>Selecciona entorno...</option>
             <option value="https://pre-tixalia.admin.experticket.com/">PRE</option>
             <option value="https://admin.tixalia.com/">PRO</option>
           </select>
-          <!--- <select class="form-select form-select-lg me-4" id="expert-customer" aria-label="customer type">
-            <option selected>---</option>
-          </select> --->
+
           <select class="form-select form-select-lg me-4" id="expert-type" aria-label="identifier type">
             <option selected>Buscar por...</option>
             <option value="Provider/ProductBase/Edit?queryViewModel=">Categoría | ProductBaseId</option>
@@ -44,17 +74,20 @@
             <option value="Provider/Ticket/Edit?queryViewModel=">Ticket | TicketId</option>
             <option value="Purchases/Sale/Details?queryViewModel=">Venta | SaleId</option>
           </select>
+
           <input class="form-control form-control-lg me-4" id="expert-id" type="text" placeholder="Introduce el identificador..." aria-label="experticket identifier">
+
           <button class="btn btn-success btn-lg col-1" id="expert-button">Ir</button>
         </div>
-
       </div>
+
       <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
         <div class="container d-flex align-items-center">
           <input class="form-control form-control-lg me-4" id="fresh-ticket" type="text" placeholder="Introduce el número de ticket..." aria-label="freshdesk ticket number">
           <button class="btn btn-success btn-lg col-1" id="fresh-button">Ir</button>
         </div>
       </div>
+
       <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
         <div class="container d-flex align-items-center">
           <input class="form-control form-control-lg me-4" type="text" id="devops-wi" placeholder="Introduce el número de Work Item..." aria-label="devops work item number">

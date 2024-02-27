@@ -79,8 +79,11 @@ devopsWI.addEventListener("keydown", handleKeyPress) // Escucha la pulsación de
 
 expertBtn.addEventListener("click", function() { // Escucha el clic en el botón de Experticket
   var selectedOption = expertEnv.value;
-  if (selectedOption === 'Selecciona entorno...') {
+  var selectedSearchType = expertType.value;
+  if (selectedOption === 'Selecciona entorno...') { //Comprueba que se selecciona entorno
     alert('Por favor, selecciona un entorno (PRE o PRO) antes de continuar.');
+  } else if (selectedSearchType === "Buscar por...") {  //comprueba que se selecciona tipo
+    alert("Por favor, selecciona una opción de búsqueda.");
   } else {
     handleClick.experTicket();
   }
