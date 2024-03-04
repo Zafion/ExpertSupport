@@ -28,7 +28,7 @@ const getBaseUrl = () => {
 
   if (selectedService === "tixalia" && selectedEnv === "PRO") {
     baseUrl = proTixalia;
-  } else if (selectedEnv === "PRO") {
+  } else if (selectedService !== "TIXALIA" && selectedEnv === "PRO") {
     baseUrl = proFirst + selectedService + proLast;
   } else {
     baseUrl = preFirst + selectedService + preLast;
