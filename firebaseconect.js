@@ -2,9 +2,19 @@
 //<script type="module" src="firebaseconect.js"></script>
 
 
+// Importar librería Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-//import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js";
+
+// Importar funciones de autenticación
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+// Opcional: Importar Firebase Analytics
+// import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCjszf-x_6jER0x5ZhwzmRgMpUdoJ2Rxuw",
@@ -15,8 +25,13 @@ const firebaseConfig = {
   appId: "1:838032327014:web:907e395d985322c8ec88a7"
 };
 
+// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-//const analytics = getAnalytics(app);
+
+// Opcional: Inicializar Firebase Analytics
+// const analytics = getAnalytics(app);
+
+// Obtener la instancia de autenticación
 const auth = getAuth();
 
 export class ManageAccount {

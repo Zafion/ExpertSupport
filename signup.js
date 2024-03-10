@@ -1,5 +1,5 @@
 //ingresar en el head del signup.html
-<script type="module" src="signup.js"></script>
+//<script type="module" src="signup.js"></script>
 
 import { ManageAccount } from './firebaseconect.js';
 
