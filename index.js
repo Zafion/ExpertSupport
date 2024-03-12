@@ -110,3 +110,4 @@ expertBtn.addEventListener("click", function() { // Escucha el clic en el botón
     handleClick.experTicket();
   }
 });
+
