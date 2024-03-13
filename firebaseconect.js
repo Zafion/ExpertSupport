@@ -1,7 +1,3 @@
-// Ingresar en el head del index.html
-//<script type="module" src="firebaseconect.js"></script>
-
-
 // Importar librería Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 
@@ -11,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
 // Opcional: Importar Firebase Analytics
@@ -73,3 +70,37 @@ export class ManageAccount {
       });
   }
 }
+
+// Variable para almacenar el estado de la sesión
+let isLoggedIn = false;
+
+// Variable para almacenar si se ha redirigido
+let isRedirected = false;
+
+// Función para verificar el estado de la sesión
+const checkSession = () => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      isLoggedIn = true;
+    } else {
+      isLoggedIn = false;
+      if (!isRedirected) {
+        window.location.href = "login.html";
+        isRedirected = true; // Set flag after redirection
+      }
+    }
+  });
+};
+
+// Función para redireccionar a login.html si no hay sesión
+const redirectToLogin = () => {
+  if (!isLoggedIn && window.location.pathname === "/index.html") {
+    window.location.href = "login.html";
+  }
+};
+
+// Iniciar la verificación del estado de la sesión despues de inicializar firebase
+checkSession();
+
+// Redireccionar a login.html si no hay sesión
+redirectToLogin();

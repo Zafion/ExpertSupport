@@ -1,6 +1,3 @@
-//ingresar en el head del signup.html
-//<script type="module" src="signup.js"></script>
-
 import { ManageAccount } from './firebaseconect.js';
 
 document.getElementById("formulario-crear").addEventListener("submit", (event) => {
