@@ -78,29 +78,48 @@ let isLoggedIn = false;
 let isRedirected = false;
 
 // Función para verificar el estado de la sesión
-const checkSession = () => {
+// const checkSession = () => {
+//   onAuthStateChanged(auth, (user) => {
+//     if (user) {
+//       isLoggedIn = true;
+//     } else {
+//       isLoggedIn = false;
+//       if (!isRedirected) {
+//         window.location.href = "login.html";
+//         isRedirected = true; // Set flag after redirection
+//       }
+//     }
+//   });
+// };
+
+// firebase.auth().onAuthStateChanged((user) => {
+//   if (!user && window.location.pathname !== "/login.html") {
+//     window.location.href = "login.html";
+//   }
+// });
+
+// Function to check authentication state and redirect (optional)
+export function checkSession() {
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      isLoggedIn = true;
-    } else {
-      isLoggedIn = false;
-      if (!isRedirected) {
-        window.location.href = "login.html";
-        isRedirected = true; // Set flag after redirection
+      if (!user && window.location.pathname !== "/login.html") {
+        //si no funciona !==login porbar ===/index
+      //if (!user && window.location.pathname === "/index.html") {
+          window.location.href = "login.html";
       }
-    }
   });
-};
+}
+
 
 // Función para redireccionar a login.html si no hay sesión
-const redirectToLogin = () => {
-  if (!isLoggedIn && window.location.pathname === "/index.html") {
-    window.location.href = "login.html";
-  }
-};
+// const redirectToLogin = () => {
+//   //if (!isLoggedIn && window.location.pathname === "/index.html") {
+//     if (!isLoggedIn && window.location.pathname !== "/login.html") {
+//     window.location.href = "login.html";
+//   }
+// };
 
 // Iniciar la verificación del estado de la sesión despues de inicializar firebase
 checkSession();
 
 // Redireccionar a login.html si no hay sesión
-redirectToLogin();
+//redirectToLogin();
