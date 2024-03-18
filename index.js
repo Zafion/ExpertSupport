@@ -1,3 +1,12 @@
+//importaciones
+import { ManageAccount } from './firebaseconect.js';
+
+// Creamos una instancia de manageAccount
+const manageAccount = new ManageAccount();
+//Definirmo elemento para cierre de sesión:
+const logoutButton = document.getElementById('logout-button');
+
+
 // Definimos los elementos del DOM que vamos a utilizar
 const expertSel = document.getElementById("experticket-selector");
 const expertEnv = document.getElementById("expert-env");
@@ -19,6 +28,17 @@ const preLast = ".admin.experticket.com/";
 // Definimos las URL bases para los diferentes servicios
 const freshBase = "https://freshdesk.experticket.com/a/tickets/";
 const devopsBase = "https://dev.azure.com/experticket/Experticket/_workitems/edit/";
+
+//Función con listener para el para el cierre de sesión
+logoutButton.addEventListener('click', () => {
+  manageAccount.signOut().then(() => {
+    window.location.href = "login.html";
+    alert("Sesión cerrada correctamente.");
+  }).catch((error) => {
+    console.error(error.message);
+    alert("Error al cerrar sesión: " + error.message);
+  });
+});
 
 //Función que comprueba combinación de Experticket y entorno para definir url base
 const getBaseUrl = () => {
