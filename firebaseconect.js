@@ -35,9 +35,10 @@ export class ManageAccount {
   register(email, password) {
     createUserWithEmailAndPassword(auth, email, password)
       .then((_) => {
-        window.location.href = "login.html";
+        //No es necesario redirigir, pues el registro ya se hace en login.html
+        //window.location.href = "login.html";
         // Mostrar alerta de registro exitoso
-        alert("Registro exitoso. Serás redirigido a la página de inicio de sesión.");
+        alert("Registro exitoso. Para continuar inicia sesión.");
       })
       .catch((error) => {
         console.error(error.message);

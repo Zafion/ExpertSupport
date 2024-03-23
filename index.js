@@ -6,7 +6,6 @@ const manageAccount = new ManageAccount();
 //Definirmo elemento para cierre de sesión:
 const logoutButton = document.getElementById('logout-button');
 
-
 // Definimos los elementos del DOM que vamos a utilizar
 const expertSel = document.getElementById("experticket-selector");
 const expertEnv = document.getElementById("expert-env");
@@ -28,6 +27,8 @@ const preLast = ".admin.experticket.com/";
 // Definimos las URL bases para los diferentes servicios
 const freshBase = "https://freshdesk.experticket.com/a/tickets/";
 const devopsBase = "https://dev.azure.com/experticket/Experticket/_workitems/edit/";
+
+
 
 //Función con listener para el para el cierre de sesión
 logoutButton.addEventListener('click', () => {
