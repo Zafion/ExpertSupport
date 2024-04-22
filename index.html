@@ -26,17 +26,20 @@
   <div class="container-fluid">
     <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true"><img src="experticket.jpg"></button>
+        <button class="nav-link active" id="experticket-tab" data-bs-toggle="tab" data-bs-target="#experticket-tab-pane" type="button" role="tab" aria-controls="experticket-tab-pane" aria-selected="true"><img src="experticket.jpg"></button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false"><img src="freshdesk.jpg"></button>
+        <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-tab-pane" type="button" role="tab" aria-controls="password-tab-pane" aria-selected="true"><img src="password.jpg"></button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"><img src="devops.jpg"></button>
+        <button class="nav-link" id="freshdesk-tab" data-bs-toggle="tab" data-bs-target="#freshdesk-tab-pane" type="button" role="tab" aria-controls="freshdesk-tab-pane" aria-selected="false"><img src="freshdesk.jpg"></button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="devops-tab" data-bs-toggle="tab" data-bs-target="#devops-tab-pane" type="button" role="tab" aria-controls="devops-tab-pane" aria-selected="false"><img src="devops.jpg"></button>
       </li>
     </ul>
     <div class="tab-content mt-5" id="myTabContent">
-      <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+      <div class="tab-pane fade show active" id="experticket-tab-pane" role="tabpanel" aria-labelledby="experticket-tab" tabindex="0">
         <div class="container d-flex align-items-center">
 
           <select class="form-select form-select-lg me-4" id="experticket-selector" aria-label="experticket selector">
@@ -91,14 +94,61 @@
         </div>
       </div>
 
-      <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+      <div class="tab-pane fade" id="password-tab-pane" role="tabpanel" aria-labelledby="password-tab" tabindex="0">
+        <div class="container d-flex align-items-center">
+
+          <select class="form-select form-select-lg me-4" id="table-selector" aria-label="table-selector">
+            <option selected>Selecciona Expeticket...</option>
+            <option value="bombasgens">BOMBAS GENS</option>
+            <option value="dinopolis">DINOPOLIS</option>
+            <option value="dna">DNA</option>
+            <option value="dta">DTA - Mestalla i Palau de les Arts</option>
+            <option value="excursionesmaritimas">EXCURSIONES MARITIMAS BENIDORM</option>
+            <option value="gdsparquesreunidos">GDS PARQUES REUNIDOS</option>
+            <option value="grprgermany">GDS PPRR ALEMANIA (Moviepark)</option>
+            <option value="grprbelgium">GDS PPRR BELGICA (Bobbejaanland)</option>
+            <option value="grpritaly">GDS PPRR ITALIA (Mirabilandia)</option>
+            <option value="grprnetherlands">GDS PPRR NETHERLANDS (Slagharen)</option>
+            <option value="hwmaspalomas">HOLLYDAY WORLD Maspalomas</option>
+            <option value="islamagica">ISLA MAGICA</option>
+            <option value="magiccostablanca">MAGIC COSTA BLANCA</option>
+            <option value="oceanografic">OCEANOGRAFIC</option>
+            <option value="parquesgruposm">PARQUES GRUPO SANTA MARIA</option>
+            <option value="portaventuraworld">PORT AVENTURA WORLD</option>
+            <option value="puydufou">PUY DU FOU</option>
+            <option value="puydufou-france">PUY DU FOU FRANCIA</option>
+            <option value="sendaviva">SENDAVIVA</option>
+            <option value="terranatura">TERRA NATURA BENIDORM</option>
+            <option value="terranaturamurcia">TERRA NATURA MURCIA</option>
+            <option value="tixalia">TIXALIA</option>  
+            <option value="travelparks">TRAVELPARKS</option>
+            <option value="visitvalencia">VISIT VALENCIA</option>
+          </select>
+
+          <input class="form-control form-control-lg me-4" id="newpass-id" type="text" placeholder="Introduce nueva contraseña" aria-label="experticket-Newpassword">
+
+          <button class="btn btn-success btn-lg col-2" id="addpass-button">Actualizar</button>
+        </div>
+        <br>
+        <div class="container d-flex align-items-center">
+          <div class="form-control">
+            <span id="experticket-password" class="me-4">Aquí se mostrará la contraseña del experticket de la tabla elegida</span>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="switch-show" checked>
+            <label class="form-check-label" for="switch-show">Mostrar/Ocultar</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="freshdesk-tab-pane" role="tabpanel" aria-labelledby="freshdesk-tab" tabindex="0">
         <div class="container d-flex align-items-center">
           <input class="form-control form-control-lg me-4" id="fresh-ticket" type="text" placeholder="Introduce el número de ticket..." aria-label="freshdesk ticket number">
           <button class="btn btn-success btn-lg col-1" id="fresh-button">Ir</button>
         </div>
       </div>
 
-      <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+      <div class="tab-pane fade" id="devops-tab-pane" role="tabpanel" aria-labelledby="devops-tab" tabindex="0">
         <div class="container d-flex align-items-center">
           <input class="form-control form-control-lg me-4" type="text" id="devops-wi" placeholder="Introduce el número de Work Item..." aria-label="devops work item number">
           <button class="btn btn-success btn-lg col-1" id="devops-button">Ir</button>
