@@ -1,6 +1,10 @@
 //importaciones
 import { ManageAccount } from './firebaseconect.js';
 
+window.addEventListener('DOMContentLoaded', (event) => {
+  console.log('index.js cargado correctamente')  
+})
+
 // Creamos una instancia de manageAccount
 const manageAccount = new ManageAccount();
 //Definirmo elemento para cierre de sesión:
@@ -23,6 +27,9 @@ const proFirst = "https://admin.";
 const proLast = ".experticket.com";
 const preFirst = "https://pre-";
 const preLast = ".admin.experticket.com/";
+
+const newPass = document.getElementById("newpass-id");
+const addpassBtn = document.getElementById("addpass-button");
 
 // Definimos las URL bases para los diferentes servicios
 const freshBase = "https://freshdesk.experticket.com/a/tickets/";
@@ -87,6 +94,8 @@ const handleClick = {
   }
 };
 
+//to do: añadir a handlefunción para manejar el botón de actualizar contraseña
+
 // Función para manejar el presionar teclas enter del teclado
 const handleKeyPress = (e) => {
   console.log(e);
@@ -105,6 +114,8 @@ const handleKeyPress = (e) => {
   }
 };
 
+//to do: anadir a handlefunción para manejar handleClick.newPass para manejar el botón de actualizar contraseña
+
 // Función para manejar el cambio en el desplegable de entorno de Experticket
 const handleChangeEnv = () => {
   console.log("Cambió");
@@ -116,6 +127,9 @@ devopsBtn.addEventListener("click", handleClick.devOps); // Escucha el clic en e
 expertId.addEventListener("keydown", handleKeyPress); // Escucha la pulsación de teclas en el campo de identificador de Experticket
 freshTicket.addEventListener("keydown", handleKeyPress); // Escucha la pulsación de teclas en el campo de número de ticket de Freshdesk
 devopsWI.addEventListener("keydown", handleKeyPress); // Escucha la pulsación de teclas en el campo de número de Work Item de DevOps
+
+newPass.addEventListener("keydown", handleKeyPress); // Escucha la pulsación de teclas en el campo de número de Work Item de NewPass
+addpassBtn.addEventListener("click", handleClick.newPass); // Escucha el clic en el botón de Actualizar contraseña
 
 expertBtn.addEventListener("click", function() { // Escucha el clic en el botón de Experticket
   var selectedOption = expertEnv.value;
@@ -131,4 +145,24 @@ expertBtn.addEventListener("click", function() { // Escucha el clic en el botón
     handleClick.experTicket();
   }
 });
+
+
+//to do:
+
+
+
+
+
+// Obtener referencia a la base de datos de Firebase
+//var database = firebase.database();
+
+// Referencia a la ubicación de los datos en la base de datos
+//var dataRef = database.ref('ruta/a/tus/datos');
+
+// Escuchar cambios en los datos y actualizar el texto
+// dataRef.on('value', function(snapshot) {
+//   var data = snapshot.val();
+//   var firebaseText = document.getElementById('firebase-text');
+//   firebaseText.textContent = data.texto;
+// });
 
