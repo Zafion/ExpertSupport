@@ -1,7 +1,12 @@
-// Importar librería Firebase
+console.log('firebaseconect.js cargado correctamente')
+
+// Importar librerías Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 
-// Importar funciones de autenticación
+// Importar librerías Firestore
+import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js"
+
+// Importar librerias de autenticación
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -9,9 +14,6 @@ import {
   signOut,
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-
-// Opcional: Importar Firebase Analytics
-// import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCjszf-x_6jER0x5ZhwzmRgMpUdoJ2Rxuw",
@@ -22,21 +24,28 @@ const firebaseConfig = {
   appId: "1:838032327014:web:907e395d985322c8ec88a7"
 };
 
+
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 
-// Opcional: Inicializar Firebase Analytics
-// const analytics = getAnalytics(app);
+// Inicializar BBDD
+const db = getFirestore(app);
 
 // Obtener la instancia de autenticación
 const auth = getAuth();
 
-export class ManageAccount {
+export class ManageAccount {  
   register(email, password) {
+    const voidpassword = " ";
+    const collections = ["bombasgens", "dinopolis", "dna", "dta", "excursionesmaritimas", "gdsparquesreunidos", "grprgermany", "grprbelgium", "grpritaly", "grprnetherlands", "hwmaspalomas", "islamagica", "magiccostablanca", "oceanografic", "parquesgruposm", "portaventuraworld", "puydufou", "puydufou-france", "sendaviva", "terranatura", "terranaturamurcia", "tixalia", "travelparks", "visitvalencia"];
     createUserWithEmailAndPassword(auth, email, password)
       .then((_) => {
-        //No es necesario redirigir, pues el registro ya se hace en login.html
-        //window.location.href = "login.html";
+
+        //itera por todas las colecciones y guarda mail y passwords vacías
+        for (let i = 0; i < collections.length; i++) {
+          savePassword(collections[i], email, voidpassword)
+          console.log("usuario guardado en " + collections[i]);
+        }        
         // Mostrar alerta de registro exitoso
         alert("Registro exitoso. Para continuar inicia sesión.");
       })
@@ -45,6 +54,8 @@ export class ManageAccount {
             // Mostrar alerta de error de registro
             alert("Error al registrar: " + error.message);
       });
+        //No es necesario redirigir, pues el registro ya se hace en login.html
+        //window.location.href = "login.html";
   }
 
   authenticate(email, password) {
@@ -72,18 +83,16 @@ export class ManageAccount {
   }
 }
 
-// Variable para almacenar el estado de la sesión
-let isLoggedIn = false; //no se está usando - borrar
-
-// Variable para almacenar si se ha redirigido
-let isRedirected = false; //no se está usando - borrar
-
+// Función para registrar contraseñas de usuario
+export const savePassword = (collectionname, mail, password) => {
+  addDoc (collection(db, collectionname),{mail, password})    
+}
 
 // Function to check authentication state and redirect (optional)
 export function checkSession() {
   onAuthStateChanged(auth, (user) => {
       if (!user && window.location.pathname !== "/login.html") {
-        //si no funciona !==login porbar ===/index
+        //si no funciona !==login probar ===/index
       //if (!user && window.location.pathname === "/index.html") {
           window.location.href = "login.html";
       }
@@ -92,4 +101,5 @@ export function checkSession() {
 
 // Iniciar la verificación del estado de la sesión despues de inicializar firebase
 checkSession();
+
 
