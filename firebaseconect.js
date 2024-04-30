@@ -1,10 +1,16 @@
-console.log('firebaseconect.js cargado correctamente')
+window.addEventListener('DOMContentLoaded', async (event) => {
+  console.log('firebaseconect.js cargado correctamente')
+  const querySnapshot = await getTasks()
+  
+})
+
+
 
 // Importar librerías Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 
 // Importar librerías Firestore
-import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js"
+import { getFirestore, collection, getDocs, addDoc, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js"
 
 // Importar librerias de autenticación
 import {
@@ -24,7 +30,6 @@ const firebaseConfig = {
   appId: "1:838032327014:web:907e395d985322c8ec88a7"
 };
 
-
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 
@@ -36,8 +41,12 @@ const auth = getAuth();
 
 export class ManageAccount {  
   register(email, password) {
-    const voidpassword = " ";
-    const collections = ["bombasgens", "dinopolis", "dna", "dta", "excursionesmaritimas", "gdsparquesreunidos", "grprgermany", "grprbelgium", "grpritaly", "grprnetherlands", "hwmaspalomas", "islamagica", "magiccostablanca", "oceanografic", "parquesgruposm", "portaventuraworld", "puydufou", "puydufou-france", "sendaviva", "terranatura", "terranaturamurcia", "tixalia", "travelparks", "visitvalencia"];
+    const voidpassword = "TestPassword";
+
+    //Listado completo:
+    //const collections = ["bombasgens", "dinopolis", "dna", "dta", "excursionesmaritimas", "gdsparquesreunidos", "grprgermany", "grprbelgium", "grpritaly", "grprnetherlands", "hwmaspalomas", "islamagica", "magiccostablanca", "oceanografic", "parquesgruposm", "portaventuraworld", "puydufou", "puydufou-france", "sendaviva", "terranatura", "terranaturamurcia", "tixalia", "travelparks", "visitvalencia"];
+    //Listado de pruebas:
+    const collections = ["test1", "test2"];
     createUserWithEmailAndPassword(auth, email, password)
       .then((_) => {
 
@@ -101,5 +110,71 @@ export function checkSession() {
 
 // Iniciar la verificación del estado de la sesión despues de inicializar firebase
 checkSession();
+
+// Función para ocultar el botón de inicio de sesión si el usuario ya ha iniciado sesión 
+export function hideLoginButtonIfLoggedIn() {
+  onAuthStateChanged(auth, (user) => {
+    const loginButton = document.querySelector('a[href="login.html"]');
+    if (user) {
+      // If user is logged in, hide the login button
+      loginButton.style.display = 'none';
+    }
+  });
+}
+
+//llamar a la función para ocultar el botón de inicio de sesión si el usuario ya ha iniciado sesión
+hideLoginButtonIfLoggedIn(); 
+
+// Función para mostrar el mail del usuario
+export function getUserMail() {
+  const user = auth.currentUser;
+  if (user) {
+    const userMailElement = document.getElementById('user-mail');
+    userMailElement.textContent = user.email;
+  } else {
+    const userMailElement = document.getElementById('user-mail');
+    userMailElement.textContent = '';
+  }
+}
+
+//llamar a la función para mostrar el mail del usuario
+onAuthStateChanged(auth, (user) => {
+  getUserMail();
+});
+
+
+//en proceso
+
+
+//mostrar datos de db
+//importar getDocs de firebase
+
+//explicación de getTasks
+//getTasks obtiene los datos de la colección 'tasks' de firebase.
+// almacena en querySnapshot los datos de la colección 'tasks'
+// recorre querySnapshot y filtra los datos de la colección 'tasks'
+//si el campo 'title' de la colección 'tasks' es igual a 'task1'
+//añade a html los datos de descripcion de la colección 'tasks'
+//passwordContainer modifica el contenido de 'experticket-password' y muestra el contenido de html
+
+//para hacer:
+// modificar getTasks para que funcione pasandole el nombre de la colección y el campo 'title' de la colección
+
+const getTasks = async () => { 
+  const querySnapshot = await getDocs(collection(db, 'tasks'));
+  let html = '';
+  querySnapshot.forEach((doc) => {
+      const task = doc.data()
+      if (task.title === 'task1') {
+          console.log(doc.data())
+          html += `${task.description}`
+      }
+      
+  });
+  const passwordContainer = document.getElementById('experticket-password').innerHTML = html
+  };
+  
+    
+
 
 

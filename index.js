@@ -21,7 +21,6 @@ const freshBtn = document.getElementById("fresh-button");
 const devopsWI = document.getElementById("devops-wi");
 const devopsBtn = document.getElementById("devops-button");
 const openSwitch = document.getElementById("switch");
-const expertCust = document.getElementById("expert-customer");
 const proTixalia = "https://admin.tixalia.com/";
 const proFirst = "https://admin.";
 const proLast = ".experticket.com";
@@ -30,6 +29,7 @@ const preLast = ".admin.experticket.com/";
 
 const newPass = document.getElementById("newpass-id");
 const addpassBtn = document.getElementById("addpass-button");
+
 
 // Definimos las URL bases para los diferentes servicios
 const freshBase = "https://freshdesk.experticket.com/a/tickets/";
@@ -145,6 +145,7 @@ expertBtn.addEventListener("click", function() { // Escucha el clic en el botón
     handleClick.experTicket();
   }
 });
+
 
 
 //to do:
