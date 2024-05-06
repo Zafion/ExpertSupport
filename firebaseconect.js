@@ -1,6 +1,7 @@
 window.addEventListener('DOMContentLoaded', async (event) => {
   console.log('firebaseconect.js cargado correctamente')
-  const querySnapshot = await getTasks()
+  //const querySnapshot = await getTasks()
+  //const querySnapshot = await getPassword()
   
 })
 
@@ -160,19 +161,44 @@ onAuthStateChanged(auth, (user) => {
 //para hacer:
 // modificar getTasks para que funcione pasandole el nombre de la colección y el campo 'title' de la colección
 
-const getTasks = async () => { 
-  const querySnapshot = await getDocs(collection(db, 'tasks'));
-  let html = '';
-  querySnapshot.forEach((doc) => {
-      const task = doc.data()
-      if (task.title === 'task1') {
-          console.log(doc.data())
-          html += `${task.description}`
-      }
+// const getTasks = async () => { 
+//   const querySnapshot = await getDocs(collection(db, 'tasks'));
+//   let html = '';
+//   querySnapshot.forEach((doc) => {
+//       const task = doc.data()
+//       if (task.title === 'task1') {
+//           console.log(doc.data())
+//           html += `${task.description}`
+//       }
       
-  });
-  const passwordContainer = document.getElementById('experticket-password').innerHTML = html
-  };
+//   });
+//   const passwordContainer = document.getElementById('experticket-password').innerHTML = html
+//   };
+
+const selectorTabla = document.getElementById('table-selector');
+
+selectorTabla.addEventListener('change', () => {
+  const tablaSeleccionada = selectorTabla.value;
+  //getPassword(tablaSeleccionada);
+  getPassword();
+});
+
+  export const getPassword = async () => { 
+    const user = auth.currentUser;
+    const querySnapshot = await getDocs(collection(db, 'test1'));
+    let html = '';
+    querySnapshot.forEach((doc) => {
+        const client = doc.data()
+        console.log(doc.data())
+        if (client.mail === user.email) {
+            console.log(doc.data())
+            html += `${client.password}`
+            console.log(html)
+        }
+        
+    });
+    const passwordContainer = document.getElementById('experticket-password').innerHTML = html
+    };
   
     
 
