@@ -1,17 +1,13 @@
 window.addEventListener('DOMContentLoaded', async (event) => {
   console.log('firebaseconect.js cargado correctamente')
-  //const querySnapshot = await getTasks()
-  //const querySnapshot = await getPassword()
   
 })
-
-
 
 // Importar librerías Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 
 // Importar librerías Firestore
-import { getFirestore, collection, getDocs, addDoc, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js"
+import { getFirestore, collection, getDocs, addDoc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js"
 
 // Importar librerias de autenticación
 import {
@@ -143,62 +139,70 @@ onAuthStateChanged(auth, (user) => {
   getUserMail();
 });
 
+//funcion para mostrar el password del usuario
 
-//en proceso
-
-
-//mostrar datos de db
-//importar getDocs de firebase
-
-//explicación de getTasks
-//getTasks obtiene los datos de la colección 'tasks' de firebase.
-// almacena en querySnapshot los datos de la colección 'tasks'
-// recorre querySnapshot y filtra los datos de la colección 'tasks'
-//si el campo 'title' de la colección 'tasks' es igual a 'task1'
-//añade a html los datos de descripcion de la colección 'tasks'
-//passwordContainer modifica el contenido de 'experticket-password' y muestra el contenido de html
-
-//para hacer:
-// modificar getTasks para que funcione pasandole el nombre de la colección y el campo 'title' de la colección
-
-// const getTasks = async () => { 
-//   const querySnapshot = await getDocs(collection(db, 'tasks'));
-//   let html = '';
-//   querySnapshot.forEach((doc) => {
-//       const task = doc.data()
-//       if (task.title === 'task1') {
-//           console.log(doc.data())
-//           html += `${task.description}`
-//       }
+export const getPassword = async (tablaSeleccionada) => { 
+  const user = auth.currentUser;
+  const querySnapshot = await getDocs(collection(db, tablaSeleccionada));
+  let html = '';
+  querySnapshot.forEach((doc) => {
+      const client = doc.data()
+      console.log(doc.data())
+      if (client.mail === user.email) {
+          console.log(doc.data())
+          html += `${client.password}`
+          console.log(html)
+      }
       
-//   });
-//   const passwordContainer = document.getElementById('experticket-password').innerHTML = html
-//   };
+  });
+  const passwordContainer = document.getElementById('experticket-password').innerHTML = html
+  };
 
-const selectorTabla = document.getElementById('table-selector');
 
-selectorTabla.addEventListener('change', () => {
-  const tablaSeleccionada = selectorTabla.value;
-  //getPassword(tablaSeleccionada);
-  getPassword();
-});
+//función para cambiar el password del usuario con updateDoc
+export const updatePassword = (tablaSeleccionada) => {
+  const user = auth.currentUser;
+  updateDoc(doc(db, tablaSeleccionada, user.email), { password: '123456' });
+  console.log('Password updated successfully');
+  //alert('Password updated successfully');
+}
 
-  export const getPassword = async () => { 
-    const user = auth.currentUser;
-    const querySnapshot = await getDocs(collection(db, 'test1'));
-    let html = '';
+
+//para continuar despues:
+
+
+//puedes usar la función updateDoc para actualizar campos de documentos que cumplan ciertos criterios, 
+//sin necesidad de conocer el ID del documento. 
+//Puedes hacer esto utilizando consultas de Firestore y la función updateDoc.
+//Aquí hay un ejemplo de cómo puedes actualizar un campo de los documentos que 
+//tengan un campo específico igual a un valor determinado:
+
+//import { query, where} from "firebase/firestore";
+
+// Crear una consulta para obtener los documentos que cumplen con el criterio
+const q = query(collection(db, "colección"), where("campoY", "==", "z"));
+
+// Obtener los documentos que cumplen con la consulta
+getDocs(q)
+  .then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
-        const client = doc.data()
-        console.log(doc.data())
-        if (client.mail === user.email) {
-            console.log(doc.data())
-            html += `${client.password}`
-            console.log(html)
-        }
-        
+      // Actualizar el campo del documento
+      doc.ref.update({ campoX: "nuevo valor" });
     });
-    const passwordContainer = document.getElementById('experticket-password').innerHTML = html
-    };
+  })
+  .catch((error) => {
+    console.error("Error al obtener los documentos: ", error);
+  });
+
+// En este ejemplo, db es una referencia a la base de datos de Firestore y "colección" es el nombre de la colección que contiene los documentos que deseas actualizar.
+
+// La función query se utiliza para crear una consulta que filtra los documentos que tienen el campo "campoY" igual a "z". La consulta se pasa a la función getDocs para obtener los documentos que cumplen con la consulta.
+
+// Luego, se itera sobre los documentos obtenidos y se utiliza doc.ref.update() para actualizar el campo "campoX" con el nuevo valor "nuevo valor".
+
+// Recuerda que updateDoc solo actualiza los campos que especificas en el objeto que pasas como argumento. Si deseas eliminar un campo de los documentos que cumplen con el criterio, debes establecer su valor en undefined o null en el objeto que pasas a doc.ref.update().
+
+    
   
     
 

@@ -167,3 +167,27 @@ expertBtn.addEventListener("click", function() { // Escucha el clic en el botón
 //   firebaseText.textContent = data.texto;
 // });
 
+
+
+// Obtener la tabla seleccionada
+const selectorTabla = document.getElementById('table-selector');
+
+// Escuchar el cambio en la tabla y llama a la función getPassword()
+selectorTabla.addEventListener('change', () => {
+  const tablaSeleccionada = selectorTabla.value;
+  //getPassword(tablaSeleccionada);
+  getPassword(tablaSeleccionada);
+  console.log(tablaSeleccionada);
+});
+
+
+
+//escuchar clic en addpassBtn y llamar a updatePassword para actualizar contraseña y a getPassword para mostrar cambio
+addpassBtn.addEventListener("click", () => {
+  const newpassId = document.getElementById('newpass-id');
+  console.log(newpassId.value);
+  const tablaSeleccionada = selectorTabla.value;
+  console.log(tablaSeleccionada);
+  updatePassword(tablaSeleccionada); //da fallo porque updatePassword no está bien en firebaseconect.js
+  getPassword(tablaSeleccionada);
+})
