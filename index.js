@@ -1,5 +1,7 @@
 //importaciones
 import { ManageAccount } from './firebaseconect.js';
+import { getPassword } from './firebaseconect.js';
+import { cambiarPassword } from './firebaseconect.js';
 
 window.addEventListener('DOMContentLoaded', (event) => {
   console.log('index.js cargado correctamente')  
@@ -121,6 +123,7 @@ const handleChangeEnv = () => {
   console.log("Cambió");
 };
 
+// Listeners para los botones
 expertEnv.addEventListener("change", handleChangeEnv); // Escucha el cambio en el desplegable de entorno
 freshBtn.addEventListener("click", handleClick.freshDesk); // Escucha el clic en el botón de Freshdesk
 devopsBtn.addEventListener("click", handleClick.devOps); // Escucha el clic en el botón de DevOps
@@ -129,8 +132,9 @@ freshTicket.addEventListener("keydown", handleKeyPress); // Escucha la pulsació
 devopsWI.addEventListener("keydown", handleKeyPress); // Escucha la pulsación de teclas en el campo de número de Work Item de DevOps
 
 newPass.addEventListener("keydown", handleKeyPress); // Escucha la pulsación de teclas en el campo de número de Work Item de NewPass
-addpassBtn.addEventListener("click", handleClick.newPass); // Escucha el clic en el botón de Actualizar contraseña
 
+
+//Función que comprueba combinación de Experticket y entorno para definir url base
 expertBtn.addEventListener("click", function() { // Escucha el clic en el botón de Experticket
   var selectedOption = expertEnv.value;
   var selectedSearchType = expertType.value;
@@ -147,32 +151,11 @@ expertBtn.addEventListener("click", function() { // Escucha el clic en el botón
 });
 
 
-
-//to do:
-
-
-
-
-
-// Obtener referencia a la base de datos de Firebase
-//var database = firebase.database();
-
-// Referencia a la ubicación de los datos en la base de datos
-//var dataRef = database.ref('ruta/a/tus/datos');
-
-// Escuchar cambios en los datos y actualizar el texto
-// dataRef.on('value', function(snapshot) {
-//   var data = snapshot.val();
-//   var firebaseText = document.getElementById('firebase-text');
-//   firebaseText.textContent = data.texto;
-// });
-
-
-
 // Obtener la tabla seleccionada
 const selectorTabla = document.getElementById('table-selector');
 
 // Escuchar el cambio en la tabla y llama a la función getPassword()
+// con getPassword muestra el valor de la contraseña actual
 selectorTabla.addEventListener('change', () => {
   const tablaSeleccionada = selectorTabla.value;
   //getPassword(tablaSeleccionada);
@@ -182,12 +165,45 @@ selectorTabla.addEventListener('change', () => {
 
 
 
-//escuchar clic en addpassBtn y llamar a updatePassword para actualizar contraseña y a getPassword para mostrar cambio
+// Escuchar clic en addpassBtn que llama a cambiarPassword y getPassword
+// con cambiarPassword actualiza contraseña con el valor de newpassId
+// con getPassword muestra el valor de la nueva contraseña (ahora la actual)
 addpassBtn.addEventListener("click", () => {
+  
   const newpassId = document.getElementById('newpass-id');
-  console.log(newpassId.value);
+  console.log("newpassId: " + newpassId.value);
   const tablaSeleccionada = selectorTabla.value;
-  console.log(tablaSeleccionada);
-  updatePassword(tablaSeleccionada); //da fallo porque updatePassword no está bien en firebaseconect.js
+  console.log("tablasel: " + tablaSeleccionada);
+  cambiarPassword(tablaSeleccionada,  newpassId.value); 
   getPassword(tablaSeleccionada);
 })
+
+
+// Función para mostrar o ocultar la contraseña
+function togglePasswordVisibility() {
+  // Obtener los elementos del DOM
+  const passwordElement = document.getElementById('experticket-password');
+  const switchShow = document.getElementById('switch-show');
+
+  // si el switch esta activado
+  if (switchShow.checked) {
+    // Obtener la contraseña
+    getPassword(selectorTabla.value);
+    // Mostrar contraseña
+    passwordElement.textContent = passwordElement.dataset.password;
+  // si el switch esta desactivado  
+  } else {
+    // recorrer la contraseña y crear tantos asteriscos como caracteres tenga la contraseña
+    const passwordLength = passwordElement.textContent.length;
+    let maskedPassword = '';
+    for (let i = 0; i < passwordLength; i++) {
+      maskedPassword += '*';
+    }
+    // Mostrar asteriscos
+    passwordElement.textContent = maskedPassword;
+  }
+}
+
+// Agregar un detector de eventos al checkbox
+const switchShow = document.getElementById('switch-show');
+switchShow.addEventListener('change', togglePasswordVisibility);

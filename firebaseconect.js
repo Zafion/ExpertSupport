@@ -156,55 +156,25 @@ export const getPassword = async (tablaSeleccionada) => {
       
   });
   const passwordContainer = document.getElementById('experticket-password').innerHTML = html
-  };
-
+};
 
 //función para cambiar el password del usuario con updateDoc
-export const updatePassword = (tablaSeleccionada) => {
-  const user = auth.currentUser;
-  updateDoc(doc(db, tablaSeleccionada, user.email), { password: '123456' });
-  console.log('Password updated successfully');
-  //alert('Password updated successfully');
-}
-
-
-//para continuar despues:
-
-
-//puedes usar la función updateDoc para actualizar campos de documentos que cumplan ciertos criterios, 
-//sin necesidad de conocer el ID del documento. 
-//Puedes hacer esto utilizando consultas de Firestore y la función updateDoc.
-//Aquí hay un ejemplo de cómo puedes actualizar un campo de los documentos que 
-//tengan un campo específico igual a un valor determinado:
-
-//import { query, where} from "firebase/firestore";
-
-// Crear una consulta para obtener los documentos que cumplen con el criterio
-const q = query(collection(db, "colección"), where("campoY", "==", "z"));
-
-// Obtener los documentos que cumplen con la consulta
-getDocs(q)
-  .then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      // Actualizar el campo del documento
-      doc.ref.update({ campoX: "nuevo valor" });
-    });
-  })
-  .catch((error) => {
-    console.error("Error al obtener los documentos: ", error);
+//se le proporciona la coleccion, y el nuevo password, el mail es el email del usuario logueado
+//no es necesario comprobar si hay un usuario logueado ya que si no se esta logeado redirige a login
+    
+export async function cambiarPassword(coleccion, nuevoPassword) {
+  // Obtiene el usuario actual
+  const user = getAuth().currentUser;  
+  // Crea una referencia a la colección
+  const coleccionRef = collection(db, coleccion);
+  // Crea una consulta para encontrar documentos con el email especificado
+  const q = query(coleccionRef, where("mail", "==", user.email));
+  // Obtiene los documentos que coinciden con la consulta
+  const querySnapshot = await getDocs(q);
+  // Itera sobre los documentos encontrados
+  querySnapshot.forEach((doc) => {
+    // Actualiza el campo "password" del documento
+    updateDoc(doc.ref, { password: nuevoPassword });
   });
-
-// En este ejemplo, db es una referencia a la base de datos de Firestore y "colección" es el nombre de la colección que contiene los documentos que deseas actualizar.
-
-// La función query se utiliza para crear una consulta que filtra los documentos que tienen el campo "campoY" igual a "z". La consulta se pasa a la función getDocs para obtener los documentos que cumplen con la consulta.
-
-// Luego, se itera sobre los documentos obtenidos y se utiliza doc.ref.update() para actualizar el campo "campoX" con el nuevo valor "nuevo valor".
-
-// Recuerda que updateDoc solo actualiza los campos que especificas en el objeto que pasas como argumento. Si deseas eliminar un campo de los documentos que cumplen con el criterio, debes establecer su valor en undefined o null en el objeto que pasas a doc.ref.update().
-
-    
-  
-    
-
-
+}
 
