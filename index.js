@@ -22,7 +22,7 @@ const freshTicket = document.getElementById("fresh-ticket");
 const freshBtn = document.getElementById("fresh-button");
 const devopsWI = document.getElementById("devops-wi");
 const devopsBtn = document.getElementById("devops-button");
-const openSwitch = document.getElementById("switch");
+const openSwitch = document.getElementById("switch_newtab");
 const proTixalia = "https://admin.tixalia.com/";
 const proFirst = "https://admin.";
 const proLast = ".experticket.com";
@@ -155,12 +155,18 @@ expertBtn.addEventListener("click", function() { // Escucha el clic en el botón
 const selectorTabla = document.getElementById('table-selector');
 
 // Escuchar el cambio en la tabla y llama a la función getPassword()
-// con getPassword muestra el valor de la contraseña actual
 selectorTabla.addEventListener('change', () => {
+  // Obtener los elementos del DOM
+  const passwordElement = document.getElementById('experticket-password');
+  // Obtener la tabla seleccionada
   const tablaSeleccionada = selectorTabla.value;
+  //desactiva 'switch-show' cada vez que se cambia de tabla por seguridad
+  document.getElementById('switch-show').checked = false;
+  // Mostrar asteriscos
+  passwordElement.textContent = '*************';
+  console.log("tablasel: " + tablaSeleccionada);
+  // con getPassword muestra el valor de la contraseña actual
   //getPassword(tablaSeleccionada);
-  getPassword(tablaSeleccionada);
-  console.log(tablaSeleccionada);
 });
 
 
@@ -169,13 +175,27 @@ selectorTabla.addEventListener('change', () => {
 // con cambiarPassword actualiza contraseña con el valor de newpassId
 // con getPassword muestra el valor de la nueva contraseña (ahora la actual)
 addpassBtn.addEventListener("click", () => {
-  
+  // Obtener el valor de newpassId
   const newpassId = document.getElementById('newpass-id');
   console.log("newpassId: " + newpassId.value);
+  // Obtener la tabla seleccionada
   const tablaSeleccionada = selectorTabla.value;
   console.log("tablasel: " + tablaSeleccionada);
+  // Llamar a cambiarPassword de la tabla seleccionada con el valor de newpassId
   cambiarPassword(tablaSeleccionada,  newpassId.value); 
-  getPassword(tablaSeleccionada);
+  // Mostrar alerta de registro exitoso
+  alert("Contraseña de " + tablaSeleccionada + " actualizada.");
+  //borrar contenido de newpass-id
+  newpassId.value = "";
+  // Obtener elvalor de experticket-password
+  const passwordElement = document.getElementById('experticket-password');
+  // Mostrar asteriscos
+  passwordElement.textContent = '*************';
+  //delay de 1 segundo antes de getPassword 
+  // cambiarPassword es asincrono y nos aseguramos que se cambia la contraseña antes mostrarla
+  //setTimeout(() => {
+  //  getPassword(tablaSeleccionada);
+  //}, 1000); 
 })
 
 
@@ -193,17 +213,15 @@ function togglePasswordVisibility() {
     passwordElement.textContent = passwordElement.dataset.password;
   // si el switch esta desactivado  
   } else {
-    // recorrer la contraseña y crear tantos asteriscos como caracteres tenga la contraseña
-    const passwordLength = passwordElement.textContent.length;
-    let maskedPassword = '';
-    for (let i = 0; i < passwordLength; i++) {
-      maskedPassword += '*';
-    }
     // Mostrar asteriscos
-    passwordElement.textContent = maskedPassword;
+    passwordElement.textContent = '*************';
   }
 }
 
 // Agregar un detector de eventos al checkbox
 const switchShow = document.getElementById('switch-show');
 switchShow.addEventListener('change', togglePasswordVisibility);
+
+
+//tests:
+
