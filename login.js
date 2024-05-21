@@ -1,5 +1,9 @@
 import { ManageAccount } from './firebaseconect.js';
 
+window.addEventListener('DOMContentLoaded', async (event) => {
+  console.log('login.js cargado correctamente')  
+})
+
 // Create a single instance of the ManageAccount class
 const manageAccount = new ManageAccount();
 
