@@ -1,34 +1,61 @@
 import { ManageAccount } from './firebaseconect.js';
 
+console.log('Formulario de Registro - Inicio de Sesión');
+
 window.addEventListener('DOMContentLoaded', async (event) => {
   console.log('login.js cargado correctamente')  
 })
 
-// Create a single instance of the ManageAccount class
+//crea una instancia de ManageAccount
 const manageAccount = new ManageAccount();
 
-// Function to handle login form submission
-function handleLogin(event) {
-  event.preventDefault();
 
+//función para manejar formulario de inicio de sesión
+function handleLogin(event) { 
+  event.preventDefault(); // Prevenir la recarga de la página
+  // obtener valore del campo de email
   const email = document.getElementById("email").value;
+  // si el email está vacio mostrar alerta
+  if (email === "") {
+    alert("Por favor, introduce tu correo electrónico.");
+    return;
+  }
+  // obtener valor del campo de contrasenya
   const password = document.getElementById("password").value;
-
+  // si la contrasenya está vacia mostrar alerta
+  if (password === "") {
+    alert("Por favor, introduce tu contraseña.");
+    return;
+  }
+  //llamar a la función para iniciar sesión
   manageAccount.authenticate(email, password);
 }
 
-// Function to handle signup form submission
+
+//función para manejar formulario de registro de usuario
 function handleSignup(event) {
-  event.preventDefault();
-
+  event.preventDefault();// Prevenir la recarga de la página
+  // obtener valor del campo de email
   const email = document.getElementById("email").value;
+  // si el email está vacio mostrar alerta
+  if (email === "") {
+    alert("Por favor, introduce tu correo electrónico.");
+    return;
+  }
+  // obtener valor del campo de contrasenya
   const password = document.getElementById("password").value;
-
+  // si la contrasenya está vacia mostrar alerta
+  if (password === "") {
+    alert("Por favor, introduce tu contraseña.");
+    return;
+  }
+  //llamar a la función para registrar usuario
   manageAccount.register(email, password);
+  //limpiar formulario
+  document.getElementById("email").value = "";
+  document.getElementById("password").value = "";
 }
 
-// Attach event listeners to the respective buttons
+// listeners para clic en los botones
 document.getElementById("btn-login").addEventListener("click", handleLogin);
 document.getElementById("btn-signup").addEventListener("click", handleSignup);
-
-console.log('Formulario de Registro - Inicio de Sesión');

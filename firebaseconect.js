@@ -29,57 +29,101 @@ const db = getFirestore(app);
 // Obtener la instancia de autenticación
 const auth = getAuth();
 
+// Obtener la ruta actual
+const currentPage = window.location.pathname;
 
-// Clase ManageAccount, registra usuario y crea colecciones, añadiendo mail y passwords vacías
+
+// Clase ManageAccount, incluye funciones de inicio de sesión, cierre de sesión y registra usuarios creando colecciones, añadiendoles mail y passwords vacías
 export class ManageAccount {  
+  //función para registrar usuario
   register(email, password) { 
-    const voidpassword = "Sin contraseña añadida, por favor, añade una"; //password vacía
+    //Contraseña vacía
+    const voidpassword = "Sin contraseña añadida, por favor, añade una"; 
     //Listado completo de colecciones:
     const collections = ["bombasgens", "dinopolis", "dna", "dta", "excursionesmaritimas", "gdsparquesreunidos", "grprgermany", "grprbelgium", "grpritaly", "grprnetherlands", "hwmaspalomas", "islamagica", "magiccostablanca", "oceanografic", "parquesgruposm", "portaventuraworld", "puydufou", "puydufou-france", "sendaviva", "terranatura", "terranaturamurcia", "tixalia", "travelparks", "visitvalencia"];
-    //Listado de pruebas:
+    //Listado de colecciones de pruebas:
     //const collections = ["test1", "test2"];
-    createUserWithEmailAndPassword(auth, email, password)//crea usuario
+    createUserWithEmailAndPassword(auth, email, password)//llama a función para crear usuario
       .then((_) => {
-        //itera por todas listado de colecciones y llama a función addCollection para crear las colecciones y guarda mail y passwords vacías
-        for (let i = 0; i < collections.length; i++) {
+        //itera por todas las colecciones del listado 
+        for (let i = 0; i < collections.length; i++) { 
+          //llama a función addCollection para crear las colecciones y añadiendoles mail y passwords vacías
           addCollection(collections[i], email, voidpassword)
           console.log("usuario guardado en " + collections[i]); 
         }        
         // Mostrar alerta de registro exitoso
         alert("Registro exitoso. Para continuar inicia sesión.");
       })
+      //gestión de errores
       .catch((error) => {
+        //Muestra error por consola
         console.error(error.message);
-            // Mostrar alerta de error de registro
-            alert("Error al registrar: " + error.message);
+        //ALERTAS:
+        //si el error es Firebase: Error (auth/invalid-email).
+        if (error.code === "auth/invalid-email") {
+          alert("El correo electrónico no es válido, por favor, introduce un correo electrónico válido.");
+        }
+        //si el error es Firebase: Firebase: Password should be at least 6 characters (auth/weak-password).
+        if (error.code === "auth/weak-password") {
+          alert("La contraseña debe tener al menos 6 caracteres. Por favor, introduce una contraseña de al menos 6 caracteres.");
+        }
+        //si el error es Firebase: Firebase: Error (auth/email-already-in-use).
+        if (error.code === "auth/email-already-in-use") {
+          alert("El correo electrónico ya se encuentra registrado. Puedes iniciar sesión con el botón 'Iniciar sesión'");
+        }       
+        //si el error no es ninguno de los otros tres.
+        if (error.code !== "auth/invalid-email" && error.code !== "auth/weak-password" && error.code !== "auth/email-already-in-use") {
+          alert("Error al registrar: " + error.message);
+        }
       });
   }
-
-
   // Función para iniciar sesión
   authenticate(email, password) {
+    //llama a función para iniciar sesión
     signInWithEmailAndPassword(auth, email, password)
       .then((_) => {
+        // Mostrar alerta de inicio de sesión exitoso y redirigir al usuario a la página principal
         window.location.href = "index.html";
-        // Mostrar alerta de inicio de sesión exitoso
         alert("Has iniciado sesión correctamente. Serás redirigido a la página principal.");
-      })
-      .catch((error) => {
+      }
+    )
+    //gestión de errores
+    .catch(
+      (error) => {
+        //Muestra error por consola
         console.error(error.message);
-                // Mostrar alerta de error de inicio de sesión
-                alert("Error al iniciar sesión: " + error.message);
-      });
+        //ALERTAS:
+        //si el error es Firebase: Error (auth/invalid-email).
+        if (error.code === "auth/invalid-email") {
+          alert("El correo electrónico no es válido o no está registrado. Por favor, introduce un correo electrónico válido.");
+        }
+        //si el error es Firebase: Error (auth/invalid-credential).
+        if (error.code === "auth/invalid-credential") {
+          alert("El mail o la contraseña proporcionada no son válidos. Por favor, revisa si el correo electrónico y la contraseña son correctos.");
+        }
+        //si el error no es Firebase: Error (auth/invalid-email) ni Firebase: Error (auth/invalid-credential)
+        if (error.code !== "auth/invalid-email" && error.code !== "auth/invalid-credential") {
+            // Mostrar alerta de error de inicio de sesión
+          alert("Error al iniciar sesión: " + error.message);
+        }               
+      }
+    );
   }
-  
-
   // Función para cerrar sesión
   signOut() {
+    //llama a función para cerrar sesión
     signOut(auth)
       .then((_) => {
+        //redirigir al usuario a la página de inicio de sesión
         window.location.href = "login.html";
+        alert("Has cerrado sesión correctamente. Serás redirigido a la página de inicio de sesión.");
       })
+      //gestión de errores
       .catch((error) => {
+        //Muestra error por consola
         console.error(error.message);
+        // Mostrar alerta de error de inicio de sesión
+        alert("Error al cerrar sesión: " + error.message);
       });
   }
 }
@@ -87,6 +131,7 @@ export class ManageAccount {
 
 // Función para crear colección y registrar mail y contraseña
 export const addCollection = (collectionname, mail, password) => {
+  //llama a función para crear colección añadiendo mail y contraseña
   addDoc (collection(db, collectionname),{mail, password})    
 }
 
@@ -113,8 +158,13 @@ export function hideLoginButtonIfLoggedIn() {
     }
   });
 }
-//llamar a la función para ocultar el botón de inicio de sesión si el usuario ya ha iniciado sesión
-hideLoginButtonIfLoggedIn(); 
+//llamar a la función para ocultar el botón de inicio de sesión si el usuario ya ha iniciado sesión.
+//hideLoginButtonIfLoggedIn(); 
+
+//Verifica si el archivo actual no es login.html antes de llamar a la función para ocultar el botón de inicio de sesión
+if (currentPage !== '/login.html') {
+  hideLoginButtonIfLoggedIn();
+}
 
 
 // Función para mostrar el mail del usuario
@@ -133,7 +183,6 @@ export function getUserMail() {
   }
 }
 // Verifica si el archivo actual no es login.html antes de llamar a la función para mostrar el mail del usuario
-const currentPage = window.location.pathname;
 if (currentPage !== '/login.html') {
   onAuthStateChanged(auth, (user) => { 
     getUserMail();
@@ -143,15 +192,22 @@ if (currentPage !== '/login.html') {
 
 //funcion para mostrar el password del usuario
 export const getPassword = async (tablaSeleccionada) => { 
-  const user = auth.currentUser; // Obtiene el usuario actual
-  const querySnapshot = await getDocs(collection(db, tablaSeleccionada)); // Obtiene los datos de la colección
-  let html = '';//inicializa variable html
-  querySnapshot.forEach((doc) => {  // Itera sobre los datos de la colección
-      const client = doc.data() // Obtiene los datos del documento
+  // Obtiene el usuario actual
+  const user = auth.currentUser; 
+  // Obtiene los datos de la colección
+  const querySnapshot = await getDocs(collection(db, tablaSeleccionada)); 
+  // Inicializa la variable html
+  let html = '';
+  // Itera sobre los datos de la colección
+  querySnapshot.forEach((doc) => {  
+      // Obtiene los datos del documento
+      const client = doc.data() 
       //console.log(doc.data())
-      if (client.mail === user.email) { // Si el mail del usuario coincide con el mail del documento
+      // Si el mail del usuario coincide con el mail del documento
+      if (client.mail === user.email) { 
           //console.log(doc.data())
-          html += `${client.password}` // Agrega el password del documento a la variable html
+          // Agrega el password del documento a la variable html
+          html += `${client.password}` 
           //console.log(html)
       }      
   });
@@ -164,6 +220,7 @@ export const getPassword = async (tablaSeleccionada) => {
 //se le proporciona la coleccion, y el nuevo password, el mail es el email del usuario logueado
 //no es necesario comprobar si hay un usuario logueado ya que si no se esta logeado redirige a login  
 export async function cambiarPassword(coleccion, nuevoPassword) {
+  // Obtiene el usuario actual
   const user = getAuth().currentUser;  // Obtiene el usuario actual
   const coleccionRef = collection(db, coleccion); // Crea una referencia a la colección
   // Crea una consulta para encontrar documentos con el email especificado:
