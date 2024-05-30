@@ -27,6 +27,7 @@ const logoutButton = document.getElementById('logout-button');
 const selectorTabla = document.getElementById('table-selector');
 const passwordElement = document.getElementById('experticket-password');
 const switchShow = document.getElementById('switch-show');
+const userMail = document.getElementById('user-mail');
 
 
 // Definimos las URL bases y combinaciones según el entorno 
@@ -50,6 +51,9 @@ logoutButton.addEventListener('click', () => {
     alert("Error al cerrar sesión: " + error.message);
   });
 });
+
+//Función con listener para userMail
+userMail.addEventListener('click', redirectToAccount);
 
 
 //Función que comprueba combinación de Experticket y entorno para definir url base
@@ -218,3 +222,10 @@ function togglePasswordVisibility() {
     passwordElement.textContent = '*************';
   }
 }
+
+// Función para redirigir a la página de gestión de cuenta
+function redirectToAccount() {
+  window.location.href = '/account.html';
+}
+
+

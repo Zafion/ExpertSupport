@@ -15,8 +15,9 @@
 
   <section class="d-flex justify-content-end align-items-center">
     <a href="login.html" class="btn btn-secondary">Iniciar sesión</a> <!-- Botón para iniciar sesión -->
-    <span id="user-mail"></span> <!-- Elemento para mostrar el mail del usuario -->
+    <a href="index.html" class="btn btn-secondary">Volver a inicio</a> <!-- Botón para iniciar sesión -->
     <button id="logout-button" class="btn btn-danger ms-2">Cerrar sesión</button> <!-- Botón para cerrar sesión -->
+    <span id="user-mail"></span> <!-- Elemento para mostrar el mail del usuario -->
   </section>
 
 </header>
@@ -41,24 +42,24 @@
         <h3 class="display-8 text-center mb-4 font--weight-normal">Elimina todas las contraseñas almacenadas en tu cuenta.</h3>
         <p class="display-7 text-center mb-4 font--weight-bold">Para borrarlas de forma individual, usa la pestaña de la página principal.</p>
         <div class="container d-flex align-items-center">
-            <input class="form-control form-control-lg me-4" id="password-check" type="text" placeholder="Para continuar introduce la contraseña de tu usuario..." aria-label="password-check">
-            <button class="btn btn-success btn-lg col-4" id="reset-button">Reestablecer contraseñas</button>
+            <input class="form-control form-control-lg me-4" id="password-check" type="text" placeholder="Para continuar introduce contraseña de usuario..." aria-label="password-check">
+            <button class="btn btn-success btn-lg col-3" id="reset-button">Reestablecer</button>
         </div>
         <br>
-        <h3 class="display-8 text-center mb-4 font--weight-normal">Modificar la contraseña de tu usuario. Elimina todas las contraseñas almacenadas de tu cuenta.</h3>
+        <h3 class="display-8 text-center mb-4 font--weight-normal">Modificar la contraseña de tu usuario.</h3>
         <div class="container d-flex align-items-center">
-            <input class="form-control form-control-lg me-4" id="password-check" type="text" placeholder="Introduce contraseña actual" aria-label="password-check">
-            <input class="form-control form-control-lg me-4" id="password-check" type="text" placeholder="Introduce nueva contraseña" aria-label="password-check">
-            <button class="btn btn-success btn-lg col-4" id="reset-button">Modificar contraseña</button>
+            <input class="form-control form-control-lg me-4" id="password-check" type="text" placeholder="Contraseña actual" aria-label="password-check">
+            <input class="form-control form-control-lg me-4" id="password-check" type="text" placeholder="Nueva contraseña" aria-label="password-check">
+            <button class="btn btn-success btn-lg col-2" id="reset-button">Modificar</button>
         </div>
         <br><br><br><p> </p>
       </div>
       <div class="tab-pane fade" id="delacc-tab-pane" role="tabpanel" aria-labelledby="delacc-tab" tabindex="0">        
-        <h3 class="display-8 text-center mb-4 font-weight-bold">Gestionar cuenta</h3>
-        <p class="display-7 text-center mb-4 font--weight-bold">Elimina todas las contraseñas almacenadas de tu cuenta. Para borrarlas de forma individual, usa la pestaña de la página principal.</p>
+        <h3 class="display-8 text-center mb-4 font-weight-bold">Eliminar cuenta</h3>
+        <p class="display-7 text-center mb-4 font--weight-bold">Elimina tu cuenta y todas las contraseñas almacenadas. Este proceso no se puede deshacer.</p>
         <div class="container d-flex align-items-center">
-            <input class="form-control form-control-lg me-4" id="password-check" type="text" placeholder="Para continuar introduce la contraseña de tu usuario..." aria-label="password-check">
-            <button class="btn btn-success btn-lg col-4" id="reset-button">Reestablecer contraseñas</button>
+            <input class="form-control form-control-lg me-4" id="password-check" type="text" placeholder="Introduce contraseña de usuario..." aria-label="password-check">
+            <button class="btn btn-success btn-lg col-4" id="reset-button">Eliminar cuenta</button>
         </div>
       </div>
     </div>
