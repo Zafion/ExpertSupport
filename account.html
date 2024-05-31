@@ -9,15 +9,16 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script type="module" src="firebaseconect.js"></script>
+  <script type="module" src="index.js"></script>
 </head>
 
 <header>
 
   <section class="d-flex justify-content-end align-items-center">
-    <a href="login.html" class="btn btn-secondary">Iniciar sesión</a> <!-- Botón para iniciar sesión -->
-    <a href="index.html" class="btn btn-secondary">Volver a inicio</a> <!-- Botón para iniciar sesión -->
-    <button id="logout-button" class="btn btn-danger ms-2">Cerrar sesión</button> <!-- Botón para cerrar sesión -->
-    <span id="user-mail"></span> <!-- Elemento para mostrar el mail del usuario -->
+    <a href="login.html" class="btn btn-secondary ms-2">Iniciar sesión</a> <!-- Botón para iniciar sesión -->
+    <a href="index.html" class="btn btn-secondary ms-2">Volver a inicio</a> <!-- Botón para iniciar sesión -->
+    <a href="account.html" class="btn btn-success ms-2" id="user-mail"></a> <!-- Botón que muestra usuario y redirige a account -->
+    <button id="logout-button" class="btn btn-danger ms-2 mr-2">Cerrar sesión</button> <!-- Botón para cerrar sesión -->
   </section>
 
 </header>
@@ -50,7 +51,7 @@
         <div class="container d-flex align-items-center">
             <input class="form-control form-control-lg me-4" id="password-check" type="text" placeholder="Contraseña actual" aria-label="password-check">
             <input class="form-control form-control-lg me-4" id="password-check" type="text" placeholder="Nueva contraseña" aria-label="password-check">
-            <button class="btn btn-success btn-lg col-2" id="reset-button">Modificar</button>
+            <button class="btn btn-success btn-lg col-2" id="modify-button">Modificar</button>
         </div>
         <br><br><br><p> </p>
       </div>
@@ -59,7 +60,7 @@
         <p class="display-7 text-center mb-4 font--weight-bold">Elimina tu cuenta y todas las contraseñas almacenadas. Este proceso no se puede deshacer.</p>
         <div class="container d-flex align-items-center">
             <input class="form-control form-control-lg me-4" id="password-check" type="text" placeholder="Introduce contraseña de usuario..." aria-label="password-check">
-            <button class="btn btn-success btn-lg col-4" id="reset-button">Eliminar cuenta</button>
+            <button class="btn btn-success btn-lg col-4" id="delete-button">Eliminar cuenta</button>
         </div>
       </div>
     </div>
