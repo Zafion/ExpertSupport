@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', async (event) => {
-  console.log('firebaseconect.js cargado correctamente')
+  console.log('firebaseconect.js cargado correctamente')  
 })
 
 // Importar librerías Firebase
@@ -9,15 +9,16 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
 import { getFirestore, collection, getDocs, addDoc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js"
 
 // Importar librerias de autenticación
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
+// Configuración de Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyCjszf-x_6jER0x5ZhwzmRgMpUdoJ2Rxuw",
-  authDomain: "expertitsupport.firebaseapp.com",
-  projectId: "expertitsupport",
-  storageBucket: "expertitsupport.appspot.com",
-  messagingSenderId: "838032327014",
-  appId: "1:838032327014:web:907e395d985322c8ec88a7"
+  apiKey: "AIzaSyBuOBk1WFaD_jttnuprTbAGBYHI8YYK4GE",
+  authDomain: "pre-expertitsupport.firebaseapp.com",
+  projectId: "pre-expertitsupport",
+  storageBucket: "pre-expertitsupport.appspot.com",
+  messagingSenderId: "521641266292",
+  appId: "1:521641266292:web:6b122687944612cbfe5521"
 };
 
 // Inicializar Firebase
@@ -230,4 +231,45 @@ export async function cambiarPassword(coleccion, nuevoPassword) {
     updateDoc(doc.ref, { password: nuevoPassword });  // Actualiza el campo "password" del documento
   });
 }
+
+
+//funcion para cambiar el password del usuario usando updatePassword
+export async function cambiarContraseña(nuevaContraseña) {
+  // Obtiene el usuario actual  
+  const user = auth.currentUser;
+  if (user) { //si hay usuario
+    try { //intenta cambiar la contraseña
+      await updatePassword(user, nuevaContraseña); 
+      console.log("La contraseña se ha cambiado correctamente.");
+    } catch (error) { //gestiona los errores
+      if (error.code === "auth/requires-recent-login") { //si el error es Firebase: Error (auth/requires-recent-login)
+        console.error("El usuario necesita iniciar sesión de nuevo para cambiar la contraseña.");
+        // alerta de que el usuario necesita iniciar sesión de nuevo para cambiar la contraseña
+        alert("Por seguridad, el usuario necesita iniciar sesión de nuevo para cambiar la contraseña. Por favor, cierra sesión einicia sesión de nuevo para poder cambiar la contraseña.");
+      } else {
+        console.error("Error al cambiar la contraseña:", error);
+        // alerta de que hubo un error al cambiar la contraseña
+        alert("Hubo un error al cambiar la contraseña. Por favor, cierra sesión e inténtalo de nuevo.");
+      }
+    }
+  } else {
+    console.error("No hay ningún usuario logeado.");
+    // alerta de que no hay usuario logeado
+    alert("Por favor, inicia sesión antes de cambiar la contraseña.");
+  }
+}
+
+
+//pruebas
+
+
+
+
+
+
+
+
+
+
+
 
