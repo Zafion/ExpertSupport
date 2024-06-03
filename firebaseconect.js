@@ -9,7 +9,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
 import { getFirestore, collection, getDocs, addDoc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js"
 
 // Importar librerias de autenticación
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword, deleteUser} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -262,7 +262,20 @@ export async function cambiarContraseña(nuevaContraseña) {
 
 //pruebas
 
-
+// Función para eliminar la cuenta del usuario
+export async function deleteAccount() {
+  try {
+    // Obtén el usuario actual
+    const user = auth.currentUser;
+    // Elimina la cuenta del usuario
+    await deleteUser(user);
+    // Redirige al usuario a la página de inicio de sesión
+    window.location.href = "/login";
+  } catch (error) {
+    // Maneja el error
+    console.error("Error al eliminar la cuenta:", error);
+  }
+}
 
 
 

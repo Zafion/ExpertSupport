@@ -48,7 +48,7 @@
               <label class="form-check-label" for="switch-reset">Confirmar eliminación</label>
             </div>
             <button class="btn btn-success btn-lg col-3" id="reset-button">Reestablecer</button>
-          </div>
+        </div>
         <br>
         <h3 class="display-8 text-center mb-4 font--weight-normal">Modificar la contraseña de tu usuario.</h3>
         <div class="container d-flex align-items-center">
@@ -61,10 +61,13 @@
       <div class="tab-pane fade" id="delacc-tab-pane" role="tabpanel" aria-labelledby="delacc-tab" tabindex="0">        
         <h3 class="display-8 text-center mb-4 font-weight-bold">Eliminar cuenta</h3>
         <p class="display-7 text-center mb-4 font--weight-bold">Elimina tu cuenta y todas las contraseñas almacenadas. Este proceso no se puede deshacer.</p>
-        <div class="container d-flex align-items-center">
-            <input class="form-control form-control-lg me-4" id="password-check2 type="text" placeholder="Introduce contraseña de usuario..." aria-label="password-check2">
-            <button class="btn btn-success btn-lg col-4" id="delete-button">Eliminar cuenta</button>
-        </div>
+        <div class="container d-flex justify-content-center align-items-center">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="switch-del-account">
+            <label class="form-check-label" for="switch-del-account">Confirmar eliminación</label>
+          </div>
+          <button class="btn btn-success btn-lg col-4" id="del-account-button">Eliminar cuenta</button>
+      </div>
       </div>
     </div>
   </div>
