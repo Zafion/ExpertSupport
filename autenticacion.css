@@ -3,6 +3,11 @@
   margin: 0;
 } */
 
+.form-check-label {
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+
 .container-fluid {
   max-width: fit-content;
 
@@ -77,4 +82,8 @@ input[type=submit] {
 /* Estilos para el botón de envío al pasar el ratón por encima */
 input[type=submit]:hover {
   background-color: #0372e9;
+}
+
+h3 {
+  font-size: 12px;
 }

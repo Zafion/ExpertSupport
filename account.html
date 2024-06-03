@@ -42,10 +42,13 @@
         <br>
         <h3 class="display-8 text-center mb-4 font--weight-normal">Elimina todas las contraseñas almacenadas en tu cuenta.</h3>
         <p class="display-7 text-center mb-4 font--weight-bold">Para borrarlas de forma individual, usa la pestaña de la página principal.</p>
-        <div class="container d-flex align-items-center">
-            <input class="form-control form-control-lg me-4" id="password-check1" type="text" placeholder="Para continuar introduce contraseña de usuario..." aria-label="password-check1">
+        <div class="container d-flex justify-content-center align-items-center">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="switch-reset">
+              <label class="form-check-label" for="switch-reset">Confirmar eliminación</label>
+            </div>
             <button class="btn btn-success btn-lg col-3" id="reset-button">Reestablecer</button>
-        </div>
+          </div>
         <br>
         <h3 class="display-8 text-center mb-4 font--weight-normal">Modificar la contraseña de tu usuario.</h3>
         <div class="container d-flex align-items-center">
