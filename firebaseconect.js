@@ -245,7 +245,7 @@ export async function cambiarContraseña(nuevaContraseña) {
       if (error.code === "auth/requires-recent-login") { //si el error es Firebase: Error (auth/requires-recent-login)
         console.error("El usuario necesita iniciar sesión de nuevo para cambiar la contraseña.");
         // alerta de que el usuario necesita iniciar sesión de nuevo para cambiar la contraseña
-        alert("Por seguridad, el usuario necesita iniciar sesión de nuevo para cambiar la contraseña. Por favor, cierra sesión einicia sesión de nuevo para poder cambiar la contraseña.");
+        alert("Por seguridad, el usuario necesita iniciar sesión de nuevo para cambiar la contraseña. Por favor, cierra sesión e inicia sesión de nuevo para poder cambiar la contraseña.");
       } else {
         console.error("Error al cambiar la contraseña:", error);
         // alerta de que hubo un error al cambiar la contraseña
@@ -263,18 +263,44 @@ export async function cambiarContraseña(nuevaContraseña) {
 //pruebas
 
 // Función para eliminar la cuenta del usuario
+// export async function deleteAccount() {
+//   try {
+//     // Obtén el usuario actual
+//     const user = auth.currentUser;
+//     // Elimina la cuenta del usuario
+//     await deleteUser(user);
+//     // Redirige al usuario a la página de inicio de sesión
+//     window.location.href = "/login";
+//   } catch (error) {
+//     // Maneja el error
+//     console.error("Error al eliminar la cuenta:", error);
+//   }
+// }
+
 export async function deleteAccount() {
-  try {
-    // Obtén el usuario actual
-    const user = auth.currentUser;
-    // Elimina la cuenta del usuario
-    await deleteUser(user);
-    // Redirige al usuario a la página de inicio de sesión
-    window.location.href = "/login";
-  } catch (error) {
-    // Maneja el error
-    console.error("Error al eliminar la cuenta:", error);
-  }
+  // Obtén el usuario actual
+  const user = auth.currentUser;
+  if (user) {
+    try {  // Intenta eliminar la cuenta del usuario
+      await deleteUser(user);
+      // Redirige al usuario a la página de inicio de sesión
+      //window.location.href = "/login";
+    } catch (error) { // Maneja el error
+      if (error.code === "auth/requires-recent-login") { //si el error es Firebase: Error (auth/requires-recent-login)
+        console.error("El usuario necesita iniciar sesión de nuevo para eliminar la cuenta.");
+        // alerta de que el usuario necesita iniciar sesión de nuevo para eliminar la cuenta
+        alert("Por seguridad, el usuario necesita iniciar sesión de nuevo para eliminar la cuenta. Por favor, cierra sesión e inicia sesión de nuevo para poder eliminar la cuenta.");
+      } else {
+        console.error("Error al eliminar la cuenta:", error);
+        // alerta de que hubo un error al eliminar la cuenta
+        alert("Hubo un error al eliminar la cuenta. Por favor, cierra sesión e inténtalo de nuevo.");
+      }
+    }    
+  } else {
+    console.error("No hay ningún usuario logeado.");
+    // alerta de que no hay usuario logeado
+    alert("Por favor, inicia sesión antes de eliminar la cuenta.");
+  }   
 }
 
 

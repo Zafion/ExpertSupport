@@ -23,6 +23,7 @@ const newUserPassword2 = document.getElementById("new-password2");
 document.getElementById("reset-button").addEventListener("click", resetAllPasswords);
 document.getElementById("modify-button").addEventListener("click", changePassword);
 document.getElementById("logout-button").addEventListener("click", logOut);
+document.getElementById("del-account-button").addEventListener("click", delAccountAndData);
 
 //listener para switchReset
 switchReset.addEventListener("change", (event) => {
@@ -31,7 +32,7 @@ switchReset.addEventListener("change", (event) => {
   //si switchReset esta activado, mostrar alerta
   if (event.target.checked) {
     //mostrar aviso
-    alert("Has activado la eliminación de passwords. pulsa Restablecer para continuar.");
+    alert("Has activado la eliminación de passwords. Si pulsas Restablecer eliminaras todas las contraseñas almacenadas en tu cuenta.\n\nPara borrarlas de forma individual, puedes usar la segunda pestaña de la página principal.");
   }
 });
 
@@ -41,7 +42,7 @@ switchDelAccount.addEventListener("change", (event) => {
   console.log("El switch cambio de valor a: " + event.target.checked);
   //si switchDelAccount esta activado, mostrar alerta
   if (event.target.checked) {
-    var result = confirm("La eliminación de tu cuenta es definitiva e irreversible. Esto significa que una vez que elimines tu cuenta, no podrás recuperarla ni acceder a ninguno de los datos asociados a ella.\n\nAl eliminar tu cuenta, se borrarán todos los datos asociados a ella, incluyendo:\n\n* Tus datos de usuario.\n* Todas tus contraseñas almacenadas serán eliminadas\n\nAl hacer clic en \"Aceptar\", confirmas que has leído y comprendido esta advertencia y que deseas continuar con el proceso de eliminación.\n\nSi no deseas eliminar tu cuenta, puedes cancelar esta acción haciendo clic en \"Cancelar\".\n\nSi tienes alguna pregunta o duda, por favor contacta con el soporte de Experticket.\n\n¿Estás seguro de que deseas eliminar tu cuenta?");
+    var result = confirm("La eliminación de tu cuenta es definitiva e irreversible. Esto significa que una vez que elimines tu cuenta, no podrás recuperarla ni acceder a ninguno de los datos asociados a ella.\n\nAl eliminar tu cuenta, se borrarán todos los datos asociados a ella, incluyendo:\n\n* Tus datos de usuario.\n* Todas tus contraseñas almacenadas serán eliminadas\n\nAl hacer clic en \"Aceptar\", confirmas que has leído y comprendido esta advertencia y que deseas continuar con el proceso de eliminación.\n\nSi no deseas eliminar tu cuenta, puedes cancelar esta acción haciendo clic en \"Cancelar\".\n\n¿Estás seguro de que deseas eliminar tu cuenta?");
     if (result) {
       switchDelAccount.checked = true;
       console.log("Usuario confirma haber leido la advertencia de eliminación y acepta continuar.");
@@ -53,7 +54,7 @@ switchDelAccount.addEventListener("change", (event) => {
 });
 
 
-//Función para el para el cierre de sesión
+//Función para el cierre de sesión
 function logOut () {
     manageAccount.signOut().then(() => {
       window.location.href = "login.html";
@@ -89,7 +90,8 @@ function changePassword() {
 //Sólo funciona si el switchReset esta activado
 function resetAllPasswords() {
   //si switchReset esta desactivado, mostrar alerta y no continuar
-  if (switchReset.unchecked) {
+  if (!switchReset.checked) {
+    console.log("switchReset desactivado");
     alert("Confirma la eliminación antes para continuar.");
     return;
   }
@@ -107,7 +109,22 @@ function resetAllPasswords() {
   }
 }
 
+ 
+//Función para borrar cuenta, sólo funciona si el switchDelAccount esta activado
+function delAccountAndData() {
+  //si switchDelAccount esta desactivado, mostrar alerta y no continuar
+  if (!switchDelAccount.checked) {
+    console.log("switchDelAccount desactivado");
+    alert("Confirma la eliminación antes para continuar.");
+    return;
+  }
+  //si switchDelAccount esta activado, llamar a deleteAccount
+  if (switchDelAccount.checked) {
+    deleteAccount();
+    //desactivar switchDelAccount
+    switchDelAccount.checked = false;
+  }
+}
 
-// a medio hacer.     
 
-
+// a medio hacer.  
