@@ -2,6 +2,7 @@
 import { ManageAccount } from './firebaseconect.js';
 import { cambiarContraseña } from './firebaseconect.js';
 import { cambiarPassword } from './firebaseconect.js';
+import { cambiarMail } from './firebaseconect.js';
 import { deleteAccount } from './firebaseconect.js';
 
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -15,15 +16,19 @@ const manageAccount = new ManageAccount();
 const switchReset = document.getElementById('switch-reset');
 const switchDelAccount = document.getElementById('switch-del-account');
 const newpassId = "Sin contraseña añadida, por favor, añade una";
+const deletedPassId = "Contraseña borrada";
+const deletedMailId = "Cuenta borrada";
 const collections = ["bombasgens", "dinopolis", "dna", "dta", "excursionesmaritimas", "gdsparquesreunidos", "grprgermany", "grprbelgium", "grpritaly", "grprnetherlands", "hwmaspalomas", "islamagica", "magiccostablanca", "oceanografic", "parquesgruposm", "portaventuraworld", "puydufou", "puydufou-france", "sendaviva", "terranatura", "terranaturamurcia", "tixalia", "travelparks", "visitvalencia"];
 const newUserPassword1 = document.getElementById("new-password1");
 const newUserPassword2 = document.getElementById("new-password2");
+
 
 // Listeners para los botones y demás elementos.
 document.getElementById("reset-button").addEventListener("click", resetAllPasswords);
 document.getElementById("modify-button").addEventListener("click", changePassword);
 document.getElementById("logout-button").addEventListener("click", logOut);
 document.getElementById("del-account-button").addEventListener("click", delAccountAndData);
+
 
 //listener para switchReset
 switchReset.addEventListener("change", (event) => {
@@ -35,6 +40,7 @@ switchReset.addEventListener("change", (event) => {
     alert("Has activado la eliminación de passwords. Si pulsas Restablecer eliminaras todas las contraseñas almacenadas en tu cuenta.\n\nPara borrarlas de forma individual, puedes usar la segunda pestaña de la página principal.");
   }
 });
+
 
 //listener para switchDelAccount
 switchDelAccount.addEventListener("change", (event) => {
@@ -100,31 +106,53 @@ function resetAllPasswords() {
     //iterar por cada elemento de collections, llamando a cambiarPassword en cada iteración y dando el valor de collections[i]
     for (let i = 0; i < collections.length; i++) {
       cambiarPassword(collections[i], newpassId);
-      console.log("Eliminado password de " + collections[i]);
+      console.log("Reiniciado password de " + collections[i]);
     }    
     // Mostrar alerta de borrado exitoso
-    alert("Se han eliminado los passwords de todos los expertickets.");
+    alert("Se han reiniciado los passwords de todos los expertickets.");
     //desactivar switchReset
     switchReset.checked = false;
   }
 }
-
  
+
 //Función para borrar cuenta, sólo funciona si el switchDelAccount esta activado
-function delAccountAndData() {
-  //si switchDelAccount esta desactivado, mostrar alerta y no continuar
-  if (!switchDelAccount.checked) {
-    console.log("switchDelAccount desactivado");
-    alert("Confirma la eliminación antes para continuar.");
-    return;
-  }
-  //si switchDelAccount esta activado, llamar a deleteAccount
-  if (switchDelAccount.checked) {
-    deleteAccount();
-    //desactivar switchDelAccount
+async function delAccountAndData() {
+  try {
+    //si switchDelAccount esta desactivado, mostrar alerta y no continuar
+    if (!switchDelAccount.checked) {
+      console.log("switchDelAccount desactivado");
+      alert("Confirma la eliminación antes para continuar.");
+      return;
+    }
+    //si switchDelAccount esta activado, "borra" contraseñas y mails y luegoo llama a deleteAccount
+    if (switchDelAccount.checked) {
+      //iterar por cada elemento de collections
+      //en cada iteración llama a cambiarPassword y a cambiarMail y dando el valor de collections[i]
+      for (let i = 0; i < collections.length; i++) {
+        try {
+          await cambiarPassword(collections[i], deletedPassId);
+          await cambiarMail(collections[i], deletedMailId);
+          console.log("borrados datos de " + collections[i]);
+        } catch (error) {
+          console.error("Error al borrar password o mail: de colección " + collections[i] + " : ", error);
+          // Mostrar alerta de que hubo un error al cambiar password o mail
+          alert("Hubo un error al borrar datos. Por favor, cierra sesión e inténtalo de nuevo.");
+          // No continuar con deleteAccount()
+          return;
+        }
+      }
+      // Elimina la cuenta del usuario solo si todos los documentos se eliminaron correctamente
+      await deleteAccount();      
+      //si todo sale bien, la función deleteAccount mostrará un alerta de borrado exitoso
+      //desactivar switchDelAccount
+      switchDelAccount.checked = false;
+      
+    }    
+    //desactivar switchDelAccount (por seguridad)
     switchDelAccount.checked = false;
+  }catch (error) {
+    console.error("Error al eliminar datos o cuenta:", error);
   }
 }
 
-
-// a medio hacer.  

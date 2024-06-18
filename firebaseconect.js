@@ -13,12 +13,12 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, si
 
 // Configuración de Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyBuOBk1WFaD_jttnuprTbAGBYHI8YYK4GE",
-  authDomain: "pre-expertitsupport.firebaseapp.com",
-  projectId: "pre-expertitsupport",
-  storageBucket: "pre-expertitsupport.appspot.com",
-  messagingSenderId: "521641266292",
-  appId: "1:521641266292:web:6b122687944612cbfe5521"
+  apiKey: "AIzaSyCjszf-x_6jER0x5ZhwzmRgMpUdoJ2Rxuw",
+  authDomain: "expertitsupport.firebaseapp.com",
+  projectId: "expertitsupport",
+  storageBucket: "expertitsupport.appspot.com",
+  messagingSenderId: "838032327014",
+  appId: "1:838032327014:web:907e395d985322c8ec88a7"
 };
 
 // Inicializar Firebase
@@ -146,6 +146,8 @@ export function checkSession() {
       }
   });
 }
+
+
 // Iniciar la verificación del estado de la sesión despues de inicializar firebase
 checkSession();
 
@@ -158,9 +160,8 @@ export function hideLoginButtonIfLoggedIn() {
       loginButton.style.display = 'none';
     }
   });
-}
-//llamar a la función para ocultar el botón de inicio de sesión si el usuario ya ha iniciado sesión.
-//hideLoginButtonIfLoggedIn(); 
+} 
+
 
 //Verifica si el archivo actual no es login.html antes de llamar a la función para ocultar el botón de inicio de sesión
 if (currentPage !== '/login.html') {
@@ -232,6 +233,21 @@ export async function cambiarPassword(coleccion, nuevoPassword) {
   });
 }
 
+//función para cambiar el mail del usuario usando updateDoc
+//se le proporciona la coleccion, y el nuevo mail, el mail es el email del usuario logueado
+//no es necesario comprobar si hay un usuario logueado ya que si no se esta logeado redirige a login  
+export async function cambiarMail(coleccion, nuevoMail) {
+  // Obtiene el usuario actual
+  const user = getAuth().currentUser;  // Obtiene el usuario actual
+  const coleccionRef = collection(db, coleccion); // Crea una referencia a la colección
+  // Crea una consulta para encontrar documentos con el email especificado:
+  const q = query(coleccionRef, where("mail", "==", user.email));
+  const querySnapshot = await getDocs(q); // Obtiene los documentos que coinciden con la consulta
+  querySnapshot.forEach((doc) => {  // Itera sobre los documentos encontrados
+    updateDoc(doc.ref, { mail: nuevoMail });  // Actualiza el campo "mail" del documento
+  });
+}
+
 
 //funcion para cambiar el password del usuario usando updatePassword
 export async function cambiarContraseña(nuevaContraseña) {
@@ -260,31 +276,15 @@ export async function cambiarContraseña(nuevaContraseña) {
 }
 
 
-//pruebas
-
-// Función para eliminar la cuenta del usuario
-// export async function deleteAccount() {
-//   try {
-//     // Obtén el usuario actual
-//     const user = auth.currentUser;
-//     // Elimina la cuenta del usuario
-//     await deleteUser(user);
-//     // Redirige al usuario a la página de inicio de sesión
-//     window.location.href = "/login";
-//   } catch (error) {
-//     // Maneja el error
-//     console.error("Error al eliminar la cuenta:", error);
-//   }
-// }
-
 export async function deleteAccount() {
   // Obtén el usuario actual
   const user = auth.currentUser;
   if (user) {
     try {  // Intenta eliminar la cuenta del usuario
       await deleteUser(user);
-      // Redirige al usuario a la página de inicio de sesión
-      //window.location.href = "/login";
+      console.log("Se ha eliminado la cuenta del usuario");
+      // Mostrar alerta de borrado exitoso
+      alert("Se han eliminado todos los datos del usuario.");
     } catch (error) { // Maneja el error
       if (error.code === "auth/requires-recent-login") { //si el error es Firebase: Error (auth/requires-recent-login)
         console.error("El usuario necesita iniciar sesión de nuevo para eliminar la cuenta.");
@@ -302,6 +302,13 @@ export async function deleteAccount() {
     alert("Por favor, inicia sesión antes de eliminar la cuenta.");
   }   
 }
+
+
+
+
+
+
+
 
 
 

@@ -9,6 +9,43 @@ window.addEventListener('DOMContentLoaded', async (event) => {
 //crea una instancia de ManageAccount
 const manageAccount = new ManageAccount();
 
+// Definimos los elementos del DOM que vamos a utilizar
+const btnSignup = document.getElementById("btn-signup");
+
+const clausula = `**Importante:**\n\n` +
+`* Los datos y contraseñas que proporciones son de uso exclusivo para el funcionamiento de la aplicación.\n` +
+`* Puedes modificarlos o eliminarlos en cualquier momento desde la gestión de tu cuenta.`;
+
+
+
+// listeners para clic en los botones
+document.getElementById("btn-login").addEventListener("click", handleLogin);
+//document.getElementById("btn-signup").addEventListener("click", handleSignup);
+
+btnSignup.addEventListener("click", (event) => {
+  event.preventDefault();
+  const confirmed = confirm(clausula);
+  if (confirmed) {
+    handleSignup();
+  }
+});
+
+// Función para mostrar la cláusula completa en una ventana emergente personalizada
+function mostrarClausula() {
+  const popup = document.createElement("div");
+  popup.classList.add("popup");
+  const textoClausula = document.createElement("p");
+  textoClausula.textContent = clausula;
+  const btnCerrar = document.createElement("button");
+  btnCerrar.textContent = "Cerrar";
+  btnCerrar.addEventListener("click", () => {
+    document.body.removeChild(popup);
+  });
+  popup.appendChild(textoClausula);
+  popup.appendChild(btnCerrar);
+  document.body.appendChild(popup);
+}
+
 
 //función para manejar formulario de inicio de sesión
 function handleLogin(event) { 
@@ -56,6 +93,4 @@ function handleSignup(event) {
   document.getElementById("password").value = "";
 }
 
-// listeners para clic en los botones
-document.getElementById("btn-login").addEventListener("click", handleLogin);
-document.getElementById("btn-signup").addEventListener("click", handleSignup);
+
