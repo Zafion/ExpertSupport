@@ -138,9 +138,21 @@ export const addCollection = (collectionname, mail, password) => {
 
 
 // Función para verificar estado de la sesión y redirigir a login si no hay usuario
+
+//Versión 1 - web alojada en firebase
+// export function checkSession() {
+//   onAuthStateChanged(auth, (user) => { //verifica estado de la sesión
+//       if (!user && window.location.pathname !== "/login.html") {
+//         //si no hay usuario y no está en login, redirigir a login.
+//           window.location.href = "login.html";
+//       }
+//   });
+// }
+
+//versión 2 - web alojada en localhost
 export function checkSession() {
   onAuthStateChanged(auth, (user) => { //verifica estado de la sesión
-      if (!user && window.location.pathname !== "/login.html") {
+      if (!user && window.location.pathname !== "/PRE_ExpertItSupport/login.html") {
         //si no hay usuario y no está en login, redirigir a login.
           window.location.href = "login.html";
       }
