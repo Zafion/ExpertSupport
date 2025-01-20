@@ -85,14 +85,34 @@ const handleClick = {
       alert("El identificador debe tener 13 (19 para las ventas)");
     }
   },
-  freshDesk: function () { //  Verifica si la opción de abrir en una nueva pestaña está activada
+  freshDesk: function () { 
+    // Verifica si el campo está vacío, comprueba si la opción de abrir en una nueva pestaña está activada y redirige a la URL correspondiente
+    // Obtener el valor del campo fresh-ticket
+    const freshTicket = document.getElementById("fresh-ticket").value;        
+    // Verificar si el campo está vacío
+    if (freshTicket === "") {
+      alert("Por favor, introduce número de ticket de Freshdesk");
+      return; // Salir de la función si el campo está vacío
+    }    
+    //  Verifica si la opción de abrir en una nueva pestaña está activada
     if (openSwitch.checked) { //Si está activada abrirá en una nueva pestaña
       window.open(freshBase + freshTicket.value, "_blank");
     } else { //Si no, abrira en la misma pestaña
       window.location = freshBase + freshTicket.value;
     }
   },
-  devOps: function () { //  Verifica si la opción de abrir en una nueva pestaña está activada
+
+
+  devOps: function () { 
+    // Verifica si el campo está vacío, comprueba si la opción de abrir en una nueva pestaña está activada y redirige a la URL correspondiente
+    // Obtener el valor del campo devops-wi
+    const devOpsWI = document.getElementById("devops-wi").value;
+    // Verificar si el campo está vacío
+    if (devOpsWI === "") {
+      alert("Por favor, introduce número de Work Item de DevOps");
+      return; // Salir de la función si el campo está vacío
+    }        
+    //  Verifica si la opción de abrir en una nueva pestaña está activada
     if (openSwitch.checked) { //Si está activada abrirá en una nueva pestaña
       window.open(devopsBase + devopsWI.value, "_blank");
     } else { //Si no, abrira en la misma pestaña
@@ -157,7 +177,7 @@ expertBtn.addEventListener("click", function() { // Escucha el clic en el botón
     alert('Por favor, selecciona un entorno (PRE o PRO) antes de continuar.');
   } else if (selectedSearchType === "Buscar por...") {  //comprueba que se selecciona tipo
     alert("Por favor, selecciona una opción de búsqueda.");
-  } else if (selectedExperticket === "Selecciona Expeticket...") {  //comprueba que se selecciona tipo
+  } else if (selectedExperticket === "Selecciona Experticket...") {  //comprueba que se selecciona tipo
     alert("Por favor, selecciona un Experticket.");
   } else {
     handleClick.experTicket();
@@ -181,7 +201,7 @@ addpassBtn.addEventListener("click", () => {
   //console.log("newpassId: " + newpassId.value);
   console.log("tablasel: " + selectorTabla.value);
   //si tablasel es vacío, mostrar alerta
-  if (selectorTabla.value === "Selecciona Expeticket...") {
+  if (selectorTabla.value === "Selecciona Experticket...") {
     alert("Por favor, selecciona una tabla antes de continuar.");
     return;
   }
