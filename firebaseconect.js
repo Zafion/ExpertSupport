@@ -138,28 +138,9 @@ export const addCollection = (collectionname, mail, password) => {
 
 
 // Función para verificar estado de la sesión y redirigir a login si no hay usuario
-
-//Versión 1 - web alojada en firebase
-// export function checkSession() {
-//   onAuthStateChanged(auth, (user) => { //verifica estado de la sesión
-//       if (!user && window.location.pathname !== "/login.html") {
-//         //si no hay usuario y no está en login, redirigir a login.
-//           window.location.href = "login.html";
-//       }
-//   });
-// }
-
-// //versión 2 - web alojada en raíz de localhost de PRE
-// export function checkSession() {
-//   onAuthStateChanged(auth, (user) => { //verifica estado de la sesión
-//       if (!user && window.location.pathname !== "/PRE_ExpertItSupport/login.html") {
-//         //si no hay usuario y no está en login, redirigir a login.
-//           window.location.href = "login.html";
-//       }
-//   });
-// }
-
-//versión 3 - web alojada en localhost/xampp de PRO
+// Ojo! de que la ruta sea exacta depende evitar bucle infinito que redirija sin parar a login.html
+// Si la ruta del proyecto cambia, cambiar la ruta en la condición de la línea 146
+// Versión Web alojada en localhost/xampp de PRO
 export function checkSession() {
   onAuthStateChanged(auth, (user) => { //verifica estado de la sesión
       if (!user && window.location.pathname !== "/xampp/ExpertSupport/login.html") {
@@ -279,6 +260,8 @@ export async function cambiarContraseña(nuevaContraseña) {
     try { //intenta cambiar la contraseña
       await updatePassword(user, nuevaContraseña); 
       console.log("La contraseña se ha cambiado correctamente.");
+      // alerta de que la contraseña se ha cambiado correctamente
+      alert("La contraseña se ha cambiado correctamente.");
     } catch (error) { //gestiona los errores
       if (error.code === "auth/requires-recent-login") { //si el error es Firebase: Error (auth/requires-recent-login)
         console.error("El usuario necesita iniciar sesión de nuevo para cambiar la contraseña.");
@@ -297,7 +280,7 @@ export async function cambiarContraseña(nuevaContraseña) {
   }
 }
 
-
+// función para eliminar la cuenta del usuario
 export async function deleteAccount() {
   // Obtén el usuario actual
   const user = auth.currentUser;
