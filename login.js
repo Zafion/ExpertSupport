@@ -9,12 +9,6 @@ window.addEventListener('DOMContentLoaded', async (event) => {
 //crea una instancia de ManageAccount
 const manageAccount = new ManageAccount();
 
-// Definimos los elementos del DOM que vamos a utilizar
-//const btnSignup = document.getElementById("btn-signup");
-
-
-
-
 // listeners para clic en los botones
 document.getElementById("btn-login").addEventListener("click", handleLogin);
 document.getElementById("btn-signup").addEventListener("click", handleSignup);
